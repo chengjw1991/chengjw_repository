@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.BorrowreadMapper">
+    <insert id="InsertBorrowread" parameterType="com.cheng.beans.Borrowread">
+        insert into borrowread values (#{borrowname},#{username},#{borrowdate},#{backtime},#{isback},#{slh},#{tyshxydm},#{qymc},#{bz},#{code},#{actualbackdate})
+    </insert>
+    <select id="SelectBorrowInfo" resultType="com.cheng.beans.Borrowread">
+        select * from (select top ${pagecount} * from borrowread  <include refid="borrowread"></include>
+        and id >= ( select max(id)  from  (select top ((#{pageindex}-1)*#{pagecount}+1) id from borrowread 
+        <include refid="borrowread"></include>   order by id asc ) d)  order by id asc) t order by t.isback desc
+    </select>
+    <select id="SelectCountBorrowInfo" resultType="java.lang.Integer">
+        select count(*) num from borrowread <include refid="borrowread"></include>
+    </select>
+    <sql id="borrowread">
+      where  ${condition} like #{content} and code like #{code} and borrowdate between #{startdate} and #{enddate}
+    </sql>
+    <update id="UpdateIsBackBySlh">
+        update borrowread set isback = 0,actualbackdate = #{date} where slh in
+        <foreach collection="slh" separator="," open="(" close=")" item="slh">#{slh}</foreach>
+    </update>
+    <update id="UpdateBzBySlh">
+        update borrowread set bz = #{bz} where slh = #{slh}
+    </update>
+</mapper>

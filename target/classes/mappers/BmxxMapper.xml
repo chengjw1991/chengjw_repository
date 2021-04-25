@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.BmxxMapper">
+    <select id="SelectBmxxtById" resultType="com.cheng.beans.Bmxx">
+        select * from bmxx where id = #{id}
+    </select>
+    <select id="SelectAllBmxx" resultType="com.cheng.beans.Bmxx">
+        select * from bmxx where code like #{code}
+    </select>
+    <select id="SelectBmxxByDwcode" resultType="com.cheng.beans.Bmxx">
+        select * from bmxx inner join dwxx on bmxx.code = dwxx.code where dwxx.code = #{dwcode} and bmxx.del = 0
+    </select>
+    <select id="SelectBmxxByPage" resultType="com.cheng.beans.Bmxx">
+        select top ${pagecount} * from bmxx where code like #{bmcode} and id >= ( select max(id)  from  (select top ((#{pageindex}-1)*#{pagecount}+1) id from bmxx where code like #{bmcode} order by id asc ) d)  order by id asc
+    </select>
+    <select id="SelectCountBmxx" resultType="java.lang.Integer">
+        select count(*) num from bmxx where code like #{bmcode}
+    </select>
+    <update id="UpdateBmxxDelOn">
+        update bmxx set del = 0 where id = #{id}
+    </update>
+    <update id="UpdateBmxxDelOff">
+        update bmxx set del = 1 where id = #{id}
+    </update>
+    <update id="UpdateBmxxById" parameterType="com.cheng.beans.Bmxx">
+        update bmxx
+        <set>
+            <if test="name==null || name == ''">
+                name = #{bmname}
+            </if>
+            <if test="del == 0 || del == 1">
+                del = #{del}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <insert id="InsertBmxx">
+        insert into bmxx values (#{name},#{code},#{del})
+    </insert>
+</mapper>

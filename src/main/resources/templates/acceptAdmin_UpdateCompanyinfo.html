@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改档案卷页数</title><meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" media="screen"/>
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <style>
+        .layui-icon-close-fill{
+            font-size: 35px;
+            font-weight: lighter;
+            color: red;
+        }
+        .layui-icon-ok-circle{
+            font-size: 35px;
+            font-weight: normal;
+            color: #59B573;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container" style="width: 100%;">
+    <form class="layui-form" style="margin-top: 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">受理号</label>
+            <div class="layui-input-inline" style="width: 280px;">
+                <input type="text" class="layui-input" name="slh" disabled>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">企业名称</label>
+            <div class="layui-input-inline" style="width: 280px;">
+                <input type="text" class="layui-input" name="qymc" disabled>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">受理页数</label>
+            <div class="layui-input-inline" style="width: 280px;">
+                <input type="text" class="layui-input" name="slys">
+            </div>
+            <div class="layui-input-inline" style="width: 35px;height: 35px;" id="icon_slys">
+            <!--                <i class="layui-icon layui-icon-ok-circle"></i>-->
+            <!--                <i class="layui-icon layui-icon-close-fill"></i>-->
+        </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline" style="margin-left: 110px;">
+                <input type="button" class="layui-btn" value="确认修改" style="width: 280px;" onclick="updateslys()">
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/layuiadmin/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/core.js"></script>
+<script>
+    var layer;
+    var $
+    layui.use(['layer'],function (){
+        layer = layui.layer;
+        $ = layui.jquery;
+    })
+    $(function () {
+        var slh = getSLH("SLH");
+        var qymc = getQYMC("QYMC");
+        $("input[name='slh']").val(slh);
+        $("input[name='qymc']").val(qymc);
+    })
+    function updateslys() {
+        var slys = $("input[name='slys']").val().trim();
+        var num = /^[1-9][0-9]*$/;
+        if (ValueIsEmpty(slys) || !num.test(slys)){
+            $("#icon_slys").html("");
+            $("#icon_slys").html("<i class='layui-icon layui-icon-close-fill'></i>");
+            return false
+        }else {
+            $("#icon_slys").html("");
+        }
+       $.ajax({
+           url: "/acceptAdmin/updateslys",
+           type: 'post',
+           data:{"slh":getSLH("SLH"),"slys":slys},
+           beforeSend: function (request) {
+               request.setRequestHeader("Token",GetToken("Token"));
+           },
+           success: function (result, textStatus, request) {
+               var token = request.getResponseHeader("Token");
+               SetToken("Token", token);
+               if (result.code == 100) {
+                   SetSLYS("SLYS",slys);
+                   top.layer.alert("修改档案卷页数成功",{icon:0,title: '提示',time: 2500},function (){
+                       parent.layer.closeAll();
+                   });
+               }else if(result.code == 200){
+                   top.layer.alert("修改档案卷页数失败",{icon:0,title:'提示',time:2500});
+               }else if(result.code == 250){
+                   top.layer.alert("会话已过期，请您重新登录",{icon:0,title: '会话过期提示',time: 2500},function (){
+                       top.window.location.href="/login";
+                   });
+               }
+           }
+       })
+    }
+</script>
+</body>
+</html>

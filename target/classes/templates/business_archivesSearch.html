@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>档案搜索</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" media="screen"/>
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+
+</head>
+<body>
+    <form class="layui-form"  style="margin-top: 10px;">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">查询类别</label>
+                <div class="layui-input-inline" style="width: 150px;">
+                    <select name="condition" id="condition">
+                        <option value="slh">受理号</option>
+                        <option value="slr">受理人</option>
+                        <option value="tyshxydm">社会信用代码</option>
+                        <option value="kh">捆号</option>
+                        <option value="qymc">企业名称</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline" style="vertical-align: bottom">
+                <div class="layui-input-inline" style="width: 350px;">
+                    <input class="layui-input" type="text" name="content" style="width: 350px;"placeholder="请输入您要查询的条件">
+                </div>
+                <input type="button" class="layui-btn" value="检索" onclick="selectcompanyinfo(1,20)">
+            </div>
+        </div>
+    </form>
+    <table id="dataTable" class="layui-table" ></table>
+<script type="text/javascript" src="/layuiadmin/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/core.js"></script>
+<script type="text/javascript" src="/js/archivesSearch.js"></script>
+</body>
+</html>

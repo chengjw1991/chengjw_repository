@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.UserallinfoMapper">
+    <select id="SelectAllInfo" resultType="com.cheng.beans.Userallinfo">
+         select top ${pagecount} * from userallinfo where
+        <include refid="userinfo"></include>
+          and id >= ( select max(id)  from  (select top ((#{pageindex}-1)*#{pagecount}+1) id from userallinfo  where <include
+            refid="userinfo"></include> order by id asc ) d)  order by id asc
+    </select>
+    <sql id="userinfo">
+        realname like #{realname} and bmname like #{bmname} and dwcode like #{dwcode}
+    </sql>
+    <select id="SelectCountInfo" resultType="java.lang.Integer">
+        select count(*) num from userallinfo where <include refid="userinfo"></include>
+    </select>
+    <select id="SelectUserInfoById" resultType="com.cheng.beans.Userallinfo">
+        select * from userallinfo  where id = #{id}
+    </select>
+</mapper>

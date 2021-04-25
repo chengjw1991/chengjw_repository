@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.LzxxMapper">
+    <insert id="InsertLzxx" parameterType="com.cheng.beans.Lzxx">
+        insert into lzxx values(#{slh},#{qymc},#{yh},#{code},#{date},#{bz})
+    </insert>
+</mapper>

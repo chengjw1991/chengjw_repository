@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.QyInfoMapper">
+    <update id="UpdateQyinfo">
+        update qyinfo set gxdw = #{dwcode},isqc = 1 where tyshxydm in
+        <foreach collection="tyshxydm" item="tyshxydm" separator="," open="(" close=")">
+           #{tyshxydm}
+        </foreach>
+    </update>
+    <update id="UpdateQyinfoOfCode">
+        <foreach collection="list" item="QRData">
+            update qyinfo set gxdw = #{QRData.qrcode},isqc = 0 where tyshxydm = #{QRData.tyshxydm}
+        </foreach>
+    </update>
+</mapper>

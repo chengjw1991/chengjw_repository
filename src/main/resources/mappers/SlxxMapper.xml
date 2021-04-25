@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.SlxxMaper">
+    <insert id="InsertSlxx" parameterType="com.cheng.beans.Slxx">
+        insert into slxx(slh,slr,hzsj,zxsj,ywlx,cywlx,slzt,ewm,slrq) values (#{slh},#{slr},#{hzsj},#{zxsj},#{ywlx},#{cywlx},1,#{ewm},#{slrq})
+    </insert>
+    <select id="SelectSlxx" resultType="com.cheng.beans.Slxx">
+        select * from slxx where slh = #{slh}
+    </select>
+    <update id="UpdateSlxx">
+        update slxx
+        <set>
+            <if test="kh != null and kh != ''">
+                kh = #{kh}
+            </if>
+        </set>
+        where slh = #{slh}
+    </update>
+    <update id="UpdateSlxxOfslzt" parameterType="java.util.List">
+        update slxx set slzt = #{slzt} where slh in
+        <foreach collection="list" item="slh" separator="," open="(" close=")" index=""> #{slh} </foreach>
+    </update>
+    <select id="SelectCount" resultType="com.cheng.beans.TongJiData">
+        select
+            case
+            <foreach collection="qylx" item="item">
+              when s.ywlx = #{item} then #{item}
+            </foreach>
+            end 'qylx',
+            sum(case when s.slzt = 1 then 1 else 0 end) 'ysl',
+            sum(case when s.slzt = 2 then 1 else 0 end) 'yjs',
+            sum(case when s.slzt = 3 then 1 else 0 end) 'szhz',
+            sum(case when s.slzt = 4 then 1 else 0 end) 'yszh',
+            sum(case when s.slzt = 5 then 1 else 0 end) 'rk',
+            sum(case when s.slzt = 6 then 1 else 0 end) 'ck'
+            from  <include refid="tj"></include>
+
+    </select>
+    <select id="SelectCountOfSLZT" resultType="com.cheng.beans.TongJDataCount">
+        select s.ywlx,count(*) zj from <include refid="tj"></include>
+    </select>
+    <sql id="tj">
+       slxx as s inner join qylx as q on q.type = s.ywlx inner join companyinfo as c on s.slh = c.slh where c.del = 0 and s.slrq between #{startdate} and #{enddate} and c.code like #{code} group by s.ywlx,q.id order by q.id asc
+    </sql>
+    <update id="UpdateSLRQ">
+        update slxx
+        <set>
+            <if test='slrq != "" || slrq != null'>
+                slrq = #{slrq}
+            </if>
+        </set>
+        where slh = #{slh}
+    </update>
+    <update id="UpdateYfp" parameterType="java.util.List">
+        update slxx set yfp = 1 where  slh in
+        <foreach collection="slh" item="slh" open="(" close=")" separator=",">
+            #{slh}
+        </foreach>
+
+    </update>
+    <update id="UpdateInfoOfZrdd" parameterType="java.util.List">
+        update slxx set zrdd = 1 where slh in
+        <foreach collection="slh" item="slh" separator="," open="(" close=")" index=""> #{slh} </foreach>
+    </update>
+</mapper>

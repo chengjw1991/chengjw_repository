@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:shi="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>角色管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" media="screen"/>
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+
+    <style>
+        .div_btn{
+            width: 1600px;
+            margin: auto;
+            margin-top: 10px;
+            text-align: right;
+        }
+        .layui-table td{
+            text-align: center;
+            font-size: 15px;
+            color: #0C0C0C;
+        }
+        .layui-table thead td{
+            color: black;
+        }
+        .layui-icon{
+           font-size: 25px;
+       }
+        .layui-icon-close{
+            margin-left: 10px;
+            color: red;
+        }
+        .layui-table tbody tr:hover{
+            background-color: white;
+        }
+        .div_table{
+            height: 580px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container" style="width: 100%;">
+
+   <div class="div_btn">
+       <input type="hidden" name="totaldata" >
+       <button class="layui-btn" onclick="insertroles()">
+           <i class="layui-icon layui-icon-add-circle"></i>
+           <span>新增</span>
+       </button>
+   </div>
+    <div class="div_table">
+        <table class="layui-table" style="margin:auto;margin-top: 20px;width: 1600px;">
+            <thead>
+              <tr>
+                  <td style="width: 5%;">编号</td>
+                  <td style="width: 12%;">名称</td>
+                  <td style="width: 12%">类型</td>
+                  <td style="width: 17%">单位名称</td>
+                  <td style="width: 6%;">单位代码</td>
+                  <td style="width: 28%;">说明</td>
+                  <td style="width: 8%;">创建日期</td>
+                  <td style="width: 6%;">角色状态</td>
+                  <td style="width: 8%">操作</td>
+              </tr>
+            </thead>
+            <tbody ></tbody>
+        </table>
+    </div>
+    <hr class="layui-bg-gray">
+    <div id="lay_page"></div>
+</div>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript"  src="/layuiadmin/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/core.js"></script>
+<script type="text/javascript" src="/js/roles.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.UserRolesMapper">
+   <insert id="InsertUserRoles" parameterType="com.cheng.beans.UserRoles">
+       insert into userRoles values (#{uid},#{rid})
+   </insert>
+    <select id="SelectIdByUserName" resultType="java.lang.Integer" >
+        select userRoles.id num from userRoles inner join userinfo on userRoles.uid = userinfo.id where userinfo.username = #{username}
+    </select>
+    <update id="UpdateUserRoles" parameterType="com.cheng.beans.UserRoles">
+        update userRoles
+        <set>
+            <if test="uid != 0">
+                uid = #{uid},
+            </if>
+            <if test="rid != 0">
+                rid = #{rid},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

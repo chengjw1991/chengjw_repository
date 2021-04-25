@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.RolesMapper">
+    <select id="SelectAllRoles" resultType="com.cheng.beans.Roles">
+        select top ${pagecount} * from roles where code like #{code} and id >= ( select max(id) from  (select top ((#{pageindex}-1)*#{pagecount}+1) id from roles  where code like #{code} order by id asc ) d)  order by id asc
+    </select>
+    <select id="SelectSumRoles" resultType="java.lang.Integer">
+        select count(*) sumcount from roles where code like #{code}
+    </select>
+    <select id="SelectRolesByName" resultType="java.lang.Integer">
+        select count(*) num from roles where name = #{rolename}
+    </select>
+    <select id="SelectIDByRoleName" resultType="java.lang.Integer">
+        select id from roles where name = #{rolename}
+    </select>
+    <select id="SelectNameById" resultType="java.lang.String">
+        select name from roles where id = #{id}
+    </select>
+    <insert id="InsertRole" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into roles values (#{name},#{type},#{del},#{explain},#{code},#{createdate},#{dwmc})
+    </insert>
+    <update id="DeleteRole">
+        update roles set del = 1 where id = #{id}
+    </update>
+    <select id="SelectRoleById" resultMap="roleMap">
+        select * from roles inner join rolesPermission on roles.id=rolesPermission.rid inner join permission on rolesPermission.pid=permission.permid where roles.id = #{id}
+    </select>
+    <resultMap id="roleMap" type="com.cheng.beans.Roles">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="type" property="type"/>
+        <result column="del" property="del"/>
+        <result column="explain" property="explain"/>
+        <result column="code" property="code"/>
+        <result column="createdate" property="createdate"/>
+        <result column="dwmc" property="dwmc"/>
+        <collection property="perms" ofType="com.cheng.beans.Permission">
+            <result column="permid" property="permid"/>
+        </collection>
+    </resultMap>
+    <!--修改角色信息-->
+    <update id="UpdateRoleById" parameterType="com.cheng.beans.Roles">
+        update roles
+        <set>
+            <if test="name !=null and name != ''">
+                name = #{name},
+            </if>
+            <if test="type !=null and type != ''">
+                type = #{type},
+            </if>
+            <if test="del == 0 or del == 1">
+                del = #{del},
+            </if>
+            <if test="explain != null and explain != ''">
+                explain = #{explain},
+            </if>
+            <if test="code != null and code != ''">
+                code = #{code},
+            </if>
+            <if test="createdate != null and createdate != ''">
+                createdate = #{createdate},
+            </if>
+            <if test="dwmc != null and dwmc != ''">
+                dwmc = #{dwmc},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="SelectTpyeList" resultType="java.lang.String">
+        select type from roles inner join userRoles on roles.id = userRoles.rid inner join userinfo on userRoles.uid = userinfo.id where userinfo.id =#{id}
+    </select>
+    <select id="SelectAllRolesInfo" resultType="com.cheng.beans.Roles">
+        select * from roles where code like #{code} and del=0 and id>1;
+    </select>
+    <select id="SelectRolesByDwcode" resultType="com.cheng.beans.Roles">
+        select roles.* from roles inner join dwxx on roles.code = dwxx.code where dwxx.code = #{dwcode} and roles.del = 0 and roles.id>1
+    </select>
+    <select id="SelectRolesByUserId" resultType="com.cheng.beans.Roles">
+        select * from roles inner join userroles on roles.id = userroles.rid inner join userinfo on userinfo.id = userroles.uid where userinfo.id = #{id}
+    </select>
+</mapper>

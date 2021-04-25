@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.CompanyinfoMapper">
+    <select id="SelectInfoBySlh" resultType="com.cheng.beans.Companyinfo">
+        select * from companyinfo where slh = #{slh} and qyzlx = #{qyzlx} and code like #{code} and del = 0
+    </select>
+    <select id="SelectCompanyInfoBySlh" resultType="com.cheng.beans.Companyinfo">
+        select * from companyinfo where slh = #{slh} and del = 0
+    </select>
+    <update id="UpdateCompanyIsBorrow" >
+        update companyinfo
+        <set>
+            <if test="isborrow==0 || isborrow==1 || isborrow==2">
+                isborrow = #{isborrow}
+            </if>
+        </set>
+        where slh = #{slh}
+    </update>
+    <update id="UpdateCompanyinfo">
+        update companyinfo
+        <set>
+            <if test="slys != 0 || slys != null">
+                slys = #{slys}
+            </if>
+        </set>
+        where slh = #{slh}
+    </update>
+    <update id="DeleteCompanyinfo" parameterType="java.util.List">
+        update companyinfo set del = 1 where slh in
+        <foreach collection="list" item="slh" separator="," open="(" close=")" index=""> #{slh} </foreach>
+    </update>
+    <update id="UpdateCompanyIsBorrowBySlh" parameterType="java.util.List">
+        update companyinfo set isborrow = 0 where slh in
+        <foreach collection="list" item="slh" open="(" close=")" separator=",">#{slh}</foreach>
+    </update>
+    <update id="UpateCompanyInfoOfCodeAndDel">
+        update companyinfo set del = #{del} , code = #{dwcode} where tyshxydm in
+        <foreach collection="tyshxydm" item="tyshxydm" open="(" close=")" separator=",">#{tyshxydm}</foreach>
+    </update>
+    <update id="UpateInfoOfCodeAndDel">
+        <foreach collection="list" item="QRData">
+            update companyinfo set del = 0,code = #{QRData.qrcode} where tyshxydm = #{QRData.tyshxydm}
+        </foreach>
+    </update>
+</mapper>

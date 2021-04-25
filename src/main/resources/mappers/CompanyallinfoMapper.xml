@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.CompanyallinfoMapper">
+    <select id="SelectAllCompanyInfo" resultType="com.cheng.beans.Companyallinfo">
+        select top ${pagecount} * from companyallinfo
+        <include refid="comp"></include> and id >= ( select max(id)  from  (select top ((#{pageindex}-1)*#{pagecount}+1) id from companyallinfo <include refid="comp"></include>  order by id asc ) d)  order by id asc
+    </select>
+    <select id="SelectCountAllinfo" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) num from companyallinfo
+        <include refid="comp"></include>
+    </select>
+    <sql id="comp">
+        where ${condition} like #{content} and code like #{code} and slrq between #{startdate} and #{enddate} and del = 0
+    </sql>
+    <!---->
+    <select id="SelectAllCompanyInfoByCondition" resultType="com.cheng.beans.Companyallinfo">
+        select top ${pagecount} * from companyallinfo
+        <include refid="compByCondition"></include> and id >= ( select max(id)  from  (select top ((#{pageindex}-1)*#{pagecount}+1) id from companyallinfo <include refid="compByCondition"></include> order by id asc ) d)  order by id asc
+    </select>
+    <select id="SelectCountAllinfoByCondition" resultType="java.lang.Integer">
+        select count(*) num from companyallinfo <include refid="compByCondition"></include>
+    </select>
+    <sql id="compByCondition">
+        where ${condition} like #{content} and code like #{code}  and del = 0
+    </sql>
+    <!---->
+    <select id="SelectCompanyInfoBySlzt" resultType="com.cheng.beans.Companyallinfo">
+        select top ${pagecount} * from companyallinfo
+        <include refid="compBySlzt"></include> and id >= ( select max(id)  from  (select top ((#{pageindex}-1)*#{pagecount}+1) id from companyallinfo <include refid="compBySlzt"></include> order by id asc ) d)  order by id asc
+    </select>
+    <select id="SelectCountBySlzt" resultType="java.lang.Integer">
+        select count(*) from companyallinfo <include refid="compBySlzt"></include>
+    </select>
+    <sql id="compBySlzt">
+        where code like #{code} and slzt = #{slzt} and slrbm like #{slrbm} and slrq between #{startdate} and #{enddate} and del = 0
+    </sql>
+
+    <select id="SelectInfoBySlh" resultType="com.cheng.beans.Companyallinfo">
+        select * from companyallinfo where code like #{code} and slh = #{slh} and slzt in (#{slzt1},#{slzt2})  and del = 0
+    </select>
+    <!--预分批管理初始化-->
+    <select id="SelectInfoOfYFP" resultType="com.cheng.beans.Companyallinfo">
+        select top ${pagecount} * from companyallinfo
+        <include refid="compofyfp"></include> and id >= ( select max(id)  from  (select top ((#{pageindex}-1)*#{pagecount}+1) id from companyallinfo <include refid="comp"></include>  order by id asc ) d)  order by id asc
+    </select>
+    <select id="SelectCountInfoOfYFP" resultType="java.lang.Integer" parameterType="java.util.Map">
+        select count(*) num from companyallinfo
+        <include refid="compofyfp"></include>
+    </select>
+    <sql id="compofyfp">
+        where ${condition} like #{content} and code like #{code} and slrq between #{startdate} and #{enddate} and del = 0 and yfp = 1
+    </sql>
+    <select id="SelectInfoByTyshxydm" resultType="com.cheng.beans.Companyallinfo">
+        select * from companyallinfo where tyshxydm = #{tyshxydm} order by slrq
+    </select>
+</mapper>

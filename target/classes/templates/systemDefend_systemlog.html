@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>系统日志</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" media="screen"/>
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <style>
+        .div-left{
+            position: absolute;
+            width: 8%;
+            height: 720px;
+            border-right: solid 1px lightgray;
+            text-align: right;
+        }
+        .dataContent{
+            position: absolute;
+            margin-left: 8.1%;
+            width: 91%;
+            height: 720px;
+
+        }
+        .data_a{
+            display:block;
+            margin-right: 5px;
+            margin-top: 15px;
+            padding-right: 10px;
+            width: 90%;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+        }
+        .data_a:nth-child(2){
+            margin-top: 10px;
+        }
+        iframe{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container" style="width: 100%;height: 725px;padding: 0px;">
+    <div class="div-left">
+        <a class="data_a" id="data_a" href="javascript:;" onclick="loginlog()"><i class="layui-icon layui-icon-friends"></i>&nbsp;&nbsp;登录日志&nbsp;&nbsp;<i class="layui-icon layui-icon-next"></i></a>
+        <a class="data_a" id="data_b" href="javascript:;" onclick="operationlog()"><i class="layui-icon layui-icon-cellphone-fine"></i>&nbsp;&nbsp;操作日志&nbsp;&nbsp;<i class="layui-icon layui-icon-next"></i></a>
+    </div>
+    <div class="dataContent">
+         <!-- <iframe data-frameid="'+id+'" scrolling="yes" frameborder="0" src="'+url+'"></iframe>-->
+    </div>
+</div>
+<script type="text/javascript" src = "/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/layuiadmin/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/core.js"></script>
+<script>
+    $(function (){
+        $(".dataContent").html("<iframe id='loginiframe' scrolling='yes' frameborder='0' src='/systemLog/loginLog'></iframe>");
+        $("#data_a").css({"background-color":"#0d957a","color":"white"});
+    });
+    function loginlog() {
+        $(".dataContent").html("<iframe id='loginiframe' scrolling='yes' frameborder='0' src='/systemLog/loginLog'></iframe>");
+        $("#data_a").css({"background-color":"#0d957a","color":"white"});
+        $("#data_b").css({"background-color":"white","color":"black"});
+    }
+    function operationlog() {
+        $(".dataContent").html("<iframe id='operationiframe' scrolling='yes' frameborder='0' src='/systemLog/operationLog'></iframe>");
+        $("#data_b").css({"background-color":"#0d957a","color":"white"});
+        $("#data_a").css({"background-color":"white","color":"black"});
+
+    }
+</script>
+</body>
+</html>

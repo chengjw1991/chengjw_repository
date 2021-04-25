@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.DwxxMapper">
+    <select id="SelectAllDwxx" resultType="com.cheng.beans.Dwxx">
+        select * from dwxx where code like #{code}
+    </select>
+    <select id="SelectById" resultType="com.cheng.beans.Dwxx">
+        select * from dwxx where id = #{id}
+    </select>
+    <select id="SelectByCode" resultType="com.cheng.beans.Dwxx">
+        select * from dwxx where code = #{code}
+    </select>
+    <select id="SelectInfo" resultType="com.cheng.beans.Dwxx">
+        select * from dwxx
+    </select>
+</mapper>

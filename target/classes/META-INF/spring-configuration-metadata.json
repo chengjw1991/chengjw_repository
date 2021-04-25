@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "photopath",
+      "type": "com.cheng.utils.PhotoPathUtil",
+      "sourceType": "com.cheng.utils.PhotoPathUtil"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

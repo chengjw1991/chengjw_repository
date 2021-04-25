@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>角色新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" media="screen"/>
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <style type="text/css">
+        .layui-icon-close-fill{
+            font-size: 35px;
+            font-weight: lighter;
+            color: red;
+        }
+        .layui-icon-ok-circle{
+            font-size: 35px;
+            font-weight: normal;
+            color: #59B573;
+        }
+
+    </style>
+</head>
+<body>
+<div class="layui-container">
+    <form class="layui-form" style="width: 550px;margin-left: 30px;margin-top: 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名称</label>
+            <div class="layui-input-inline" style="width: 380px;">
+                <input class="layui-input" name="rolename" type="text" placeholder="请输入角色名称" onblur="checkrole()">
+            </div>
+            <div class="layui-input-inline" style="width: 35px;height: 35px;" id="form_icon">
+                <!--                <i class="layui-icon layui-icon-ok-circle"></i>-->
+                <!--                <i class="layui-icon layui-icon-close-fill"></i>-->
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单位名称</label>
+            <div class="layui-input-inline"style="width: 380px;">
+                <select id="dwmc" name="dwcode">
+                    <option value="wscjw">-----请选择角色的单位-----</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色描述</label>
+            <div class="layui-input-inline"style="width: 380px;">
+                <textarea class="layui-textarea" name="explain" placeholder="请描述您新增的角色"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否禁用</label>
+            <div class="layui-input-inline"style="width: 380px;">
+                <input type="radio" class="layui-input" name="del" value="1" title="是">
+                <input type="radio" class="layui-input" name="del" value="0" title="否">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色权限</label>
+            <div class="layui-input-inline"style="width: 380px;" id="perms"></div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input type="button" class="layui-btn" value="确认修改" style="width: 380px;" onclick="updateroleinfo()">
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/layuiadmin/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/core.js"></script>
+<script type="text/javascript" src="/js/updateroles.js"></script>
+</body>
+</html>

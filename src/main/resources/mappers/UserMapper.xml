@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.UserMapper">
+    <sql id="UsersearchRusult">
+         userinfo.*,roles.name rname,roles.type rtype,permission.name pname,permission.code pcode,permid
+    </sql>
+    <sql id="UserseachRolesCondition">
+        userinfo  inner join userRoles  on userinfo.id= userRoles.uid inner join roles on userRoles.rid = roles.id
+    </sql>
+    <sql id="UserseachPermCondition">
+        userinfo inner join userRoles on userinfo.id= userRoles.uid inner join roles  on userRoles.rid = roles.id inner join rolesPermission  on roles.id = rolesPermission.rid inner join permission on rolesPermission.pid=permission.permid
+    </sql>
+
+    <resultMap id="UserMap" type="com.cheng.beans.UserInfo">
+        <id column="id" property="id" javaType="java.lang.Integer"/>
+        <result column="username" property="username" javaType="java.lang.String"/>
+        <result column="password" property="password" javaType="java.lang.String"/>
+        <result column="realname" property="realname" javaType="java.lang.String"/>
+        <result column="departmentid" property="departmentid" javaType="java.lang.Integer"/>
+        <result column="sex" property="sex" javaType="java.lang.String"/>
+        <result column="phone" property="phone" javaType="java.lang.String"/>
+        <result column="registdate" property="registdate" javaType="java.lang.String"/>
+        <result column="disableid" property="disableid" javaType="java.lang.Integer"/>
+        <result column="delflag" property="delflag" javaType="java.lang.Integer"/>
+        <result column="prifilephoto" property="prifilephoto" javaType="java.lang.String"/>
+        <result column="userid" property="userid" javaType="java.lang.String"/>
+        <result column="dwcode" property="dwcode" javaType="java.lang.String"/>
+        <collection property="rolesList" ofType="com.cheng.beans.Roles">
+            <result column="rname" property="name" javaType="java.lang.String"/>
+            <result column="rtype" property="type" javaType="java.lang.String"/>
+        </collection>
+        <collection property="permList" ofType="com.cheng.beans.Permission">
+            <result column="pname" property="name" javaType="java.lang.String"/>
+            <result column="pcode" property="code" javaType="java.lang.String"/>
+            <result column="permid" property="permid" javaType="java.lang.Integer"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="userroles" type="com.cheng.beans.UserInfo">
+        <id column="id" property="id" javaType="java.lang.Integer"/>
+        <result column="username" property="username" javaType="java.lang.String"/>
+        <result column="prifilephoto" property="prifilephoto" javaType="java.lang.String"/>
+        <collection property="rolesList" ofType="com.cheng.beans.Roles">
+            <result column="rname" property="name" javaType="java.lang.String"/>
+        </collection>
+    </resultMap>
+
+    <select id="SelectDelflagByName" resultType="java.lang.Integer">
+        select delflag from userinfo where username = #{username};
+    </select>
+    <select id="SelectByName" resultMap="UserMap">
+        select <include refid="UsersearchRusult"></include> from
+        <include refid="UserseachPermCondition"></include>
+        where userinfo.username = #{username} and userinfo.delflag = 0
+    </select>
+    <select id="SelectUserInfoByUserid" resultMap="userroles">
+        select userinfo.username,userinfo.prifilephoto,roles.name rname from userinfo inner join userroles on userinfo.id = userroles.uid inner join roles on userroles.rid = roles.id where userinfo.userid= #{userid}
+    </select>
+    <select id="SelectByUserId" resultMap="UserMap" parameterType="java.lang.String">
+        select <include refid="UsersearchRusult"></include> from
+        <include refid="UserseachPermCondition"></include>
+        where userinfo.userid = #{userid}
+    </select>
+    <select id="SelectPasswordById" resultType="java.lang.String">
+        select password from userinfo where userid = #{userid}
+    </select>
+    <update id="updatePassword">
+        update userinfo set password = #{newpassword} where userid = #{userid}
+    </update>
+    <update id="updatePrifilePhoto">
+        update userinfo set prifilephoto = #{photoname} where userid = #{userid}
+    </update>
+    <select id="SelectAllUser" resultMap="UserMap">
+        select 
+        <include refid="UsersearchRusult"></include>
+        from
+        <include refid="UserseachPermCondition"></include>
+        where dwcode like #{dwcode}
+    </select>
+    <select id="SelectCount" resultType="java.lang.Integer">
+        select count(*) num from userinfo where dwcode like #{dwcode}
+    </select>
+    <update id="UpdateUserById" >
+        update userinfo set delflag = 1 where id = #{id}
+    </update>
+    <insert id="InsertUser" parameterType="com.cheng.beans.UserInfo" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into userinfo values(#{username},#{password},#{realname},#{departmentid},#{sex},#{phone},#{registdate},#{disableid},#{delflag},#{prifilephoto},#{userid},#{dwcode})
+    </insert>
+    <select id="CheckUserByUsername" resultType="java.lang.Integer">
+        select count(*) num from userinfo where username = #{username}
+    </select>
+    <update id="updateUser" parameterType="com.cheng.beans.UserInfo">
+        update userinfo
+        <set>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="realname != null">
+                realname = #{realname},
+            </if>
+            <if test="departmentid != null">
+                departmentid = #{departmentid},
+            </if>
+            <if test='sex =="男" || sex =="女"'>
+                sex = #{sex},
+            </if>
+            <if test="delflag == 0 ||delflag == 1">
+                delflag =#{delflag},
+            </if>
+            <if test="prifilephoto != null">
+                prifilephoto = #{prifilephoto},
+            </if>
+            <if test="dwcode != null">
+                dwcode = #{dwcode},
+            </if>
+        </set>
+        where username = #{username}
+    </update>
+    <select id="SelectUserIDByName" resultType="java.lang.Integer">
+        select id from userinfo where username = #{username}
+    </select>
+</mapper>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>登录</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" media="screen"/>
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/login.css">
+    <script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/js/core.js"></script>
+    <script>
+        /**
+         * 页面加载即生成验证码，引入自定义的js
+         */
+        $(function (){
+            var elem = $(".code span");
+            // 清空输入的验证码
+            $(".checkcode").val("");
+            createCheckCode(elem,4); //自定义js文件中的函数
+        })
+        //刷新验证码
+        refreshcode();
+        /**
+         * 防止会话过期时，点开弹窗，弹窗里会显示登录界面
+         */
+        $(function (){
+            if(top != window){
+                top.location.href = window.location.href;
+            }
+        })
+        function refreshcode(){
+            var elem = $(".code span");
+            createCheckCode(elem,4);
+            $(".checkcode").val("");
+        }
+    </script>
+</head>
+<body>
+<div class="layui-carousel" lay-filter="login_carousel" id="carousel">
+
+    <div carousel-item >
+        <div><img src="/images/login_bg1.jpg"></div>
+        <div><img src="/images/login_bg2.jpg"></div>
+    </div>
+    <div class="layui-container" id="lay_form" >
+        <form class="layui-form" >
+            <label class="layui-form-label" >欢迎!&nbsp;库房管理系统！</label>
+            <input class="layui-input username" type="text" lay-verify="required" placeholder="请输入账号" name="username"><br>
+            <input class="layui-input password" type="password" lay-verify="required"  placeholder="请输入密码" name="password"><br>
+            <div class="layui-inline" style="margin-bottom: 15px;">
+                <input class="layui-input checkcode" type="text" lay-verify="required"  placeholder="请输入验证码" style="border-radius: 5px;">
+                <div class="code_div">
+                    <div class="code" >
+                        <span style="line-height: 40px;" class="codespan"></span>
+                    </div>
+                    <a href="javascript:void(0);" onclick="refreshcode();"><i class="layui-icon layui-icon-refresh" style="color: red;"></i></a>
+                </div>
+            </div>
+            <input type="button" class="layui-btn btn1" onclick="login()" value="登录">
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="/layuiadmin/layui/layui.js"></script>
+<script type="text/javascript" src="/js/core.js"></script>
+<script >
+    var $;
+    var layer;
+    layui.use(['carousel','layer'],function (){
+        carousel = layui.carousel;
+        $ = layui.jquery;
+        layer = layui.layer;
+        carousel.render({
+            elem: '#carousel',
+            full : true,
+            arrow: 'none',
+            anim: 'fade',
+            interval:3000
+        });
+    })
+    function login() {
+        var username = $(".username").val().trim();
+        var password = $(".password").val().trim();
+        var codespan = $(".codespan").html();
+        var checkcode = $(".checkcode").val().trim();
+        if (ValueIsEmpty(username)){
+            top.layer.alert('用户名不能为空',{icon:2,time:2500,title:'提示'});
+            return false;
+        }
+        if (ValueIsEmpty(password)){
+            top.layer.alert('密码不能为空',{icon:2,time:2500,title:'提示'});
+            return  false;
+        }
+        if (ValueIsEmpty(checkcode)){
+            top.layer.alert('验证码不能为空',{icon:2,time:2500,title:'提示'});
+            return  false;
+        }
+        var  checkcode_str = checkcode.toUpperCase();
+        var  codespan_str =codespan.toUpperCase();
+        if (checkcode_str != codespan_str){
+            top.layer.alert('验证码错误',{icon:2,time:2500,title:'提示'});
+            refreshcode();
+            return false;
+        }
+        // 自定义封装的ajax，其中 result 是 封装的ajax回调函数的数据
+        sendAjax("/UserLogin",{"username":username,"password":password},function (result) {
+            if (result.code ==100) {
+                $(".checkcode").val("");
+                window.location.href = "/index";
+            }else if (result.code == 200){
+                layer.alert("账号或密码错误！请您重新登录",{icon:0,title:'大人！请看！',time:2500});
+            }
+            else {
+                layer.alert(result.msg,{icon:0,time:2500,tilde:'登录提示'},function (){
+                    $(".checkcode").val("");
+                    refreshcode();
+                    window.location.reload();
+                });
+            }
+        })
+    }
+</script>
+</body>
+</html>

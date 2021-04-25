@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>角色新增</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" media="screen"/>
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <style type="text/css">
+        .layui-icon-close-fill{
+            font-size: 35px;
+            font-weight: lighter;
+            color: red;
+        }
+        .layui-icon-ok-circle{
+            font-size: 35px;
+            font-weight: normal;
+            color: #59B573;
+        }
+        .div_photo{
+            width: 100px;
+            height: 100px;
+            border: solid 1px #B2B2B2;
+            margin-top: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .updatebtn{
+            width:102px;
+        }
+        #upload_img{
+            width: 100%;
+            height: 100%;
+        }
+        .label_span{
+            margin-left: 5px;
+            font-size: 15px;
+            color: red;
+            font-weight: bolder;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container">
+    <form class="layui-form" style="width: 550px;margin-left: 30px;margin-top: 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号<span class="label_span">*</span></label>
+            <div class="layui-input-inline" style="width: 380px;">
+                <input class="layui-input" name="username" type="text" placeholder="请输入账号" onblur="checkuser()">
+            </div>
+            <div class="layui-input-inline" style="width: 35px;height: 35px;" id="icon_username">
+                <!--                <i class="layui-icon layui-icon-ok-circle"></i>-->
+                <!--                <i class="layui-icon layui-icon-close-fill"></i>-->
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码<span class="label_span">*</span></label>
+            <div class="layui-input-inline" style="width: 380px;">
+                <input class="layui-input" name="password" type="password" placeholder="请输入密码" onblur="checkpassword()">
+            </div>
+            <div class="layui-input-inline" style="width: 35px;height: 35px;" id="icon_password">
+                <!--                <i class="layui-icon layui-icon-ok-circle"></i>-->
+                <!--                <i class="layui-icon layui-icon-close-fill"></i>-->
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名<span class="label_span">*</span></label>
+            <div class="layui-input-inline" style="width: 380px;">
+                <input class="layui-input" name="realname" type="text" placeholder="请输入真实姓名" onblur="checkrealname()">
+            </div>
+            <div class="layui-input-inline" style="width: 35px;height: 35px;" id="icon_realname">
+                <!--                <i class="layui-icon layui-icon-ok-circle"></i>-->
+                <!--                <i class="layui-icon layui-icon-close-fill"></i>-->
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别<span class="label_span">*</span></label>
+            <div class="layui-input-inline" style="width: 380px;">
+                <input class="layui-input" name="sex" type="radio" value="男" title="男" checked >
+                <input class="layui-input" name="sex" type="radio" value="女" title="女" >
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">单位<span class="label_span">*</span></label>
+            <div class="layui-input-inline"style="width: 380px;">
+                <select lay-filter="dwcode" id="dwcode" name="dwcode">
+                    <option value="wscjw">-----请选择单位-----</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门<span class="label_span">*</span></label>
+            <div class="layui-input-inline"style="width: 380px;">
+                <select lay-filter="bmid" id="bmid" name="bmid">
+                    <option value="0">-----请选择部门-----</option>
+                </select>
+                <input type="hidden" name="userbmxx">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色<span class="label_span">*</span></label>
+            <div class="layui-input-inline"style="width: 380px;" id="roles">
+                <select lay-filter="userrole" id="userrole" name="roles">
+                    <option value="0">-----请选择角色-----</option>
+                </select>
+                <input type="hidden" name="userroles">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限<span class="label_span">*</span></label>
+            <div class="layui-input-inline"style="width: 380px;" id="perms"></div>
+            <input type="hidden" name="permission">
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话<span class="label_span">*</span></label>
+            <div class="layui-input-inline"style="width: 380px;">
+                <input class="layui-input" name="phone" type="text" placeholder="请输入您的手机号码" onblur="checkphone()">
+            </div>
+            <div class="layui-input-inline" style="width: 35px;height: 35px;" id="icon_phone">
+                <!--                <i class="layui-icon layui-icon-ok-circle"></i>-->
+                <!--                <i class="layui-icon layui-icon-close-fill"></i>-->
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-upload">
+                <label class="layui-form-label">头像<span class="label_span">*</span></label>
+                <div class="layui-input-inline"style="width: 380px;">
+                    <button type="button" class="layui-btn updatebtn" id="upload_btn">上传头像</button>
+                    <div class="layui-upload-list div_photo">
+                        <img class="layui-upload-img" id="upload_img">
+                        <p id="p_photo"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否启用</label>
+            <div class="layui-input-inline">
+                <input type="checkbox" name="delflag" lay-skin="switch" lay-text="启用|禁用" checked>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input type="button" class="layui-btn" value="确认新增" style="width: 380px;" onclick="makesureinsert()">
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="/layuiadmin/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/core.js"></script>
+<script type="text/javascript" src="/js/addusers.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改头像</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" media="screen"/>
+    <script type="text/javascript" src="/js/core.js"></script>
+    <script>
+        /**
+         * 回显当前用户的头像
+         */
+
+    </script>
+
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <style>
+        .layui-container{
+            width: 550px;
+            height: 350px;
+        }
+        .left{
+            position: absolute;
+            width: 250px;
+            height: 300px;
+            margin-top: 20px;
+
+        }
+        .right{
+            position: absolute;
+            width: 250px;
+            height: 300px;
+            margin-top: 20px;
+            margin-left: 270px;
+        }
+        .div_photo{
+            width: 250px;
+            height: 250px;
+            border: solid 1px #B2B2B2;
+            margin-top: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        #upload_img{
+            width: 100%;
+            height: 100%;
+        }
+        #show_img{
+            width: 100%;
+            height: 100%;
+        }
+        .show_btn{
+            width: 248px;
+        }
+        .updatebtn{
+            width:119px;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="layui-container">
+    <div class="left">
+        <button type="button" class="layui-btn show_btn" disabled="disabled">当前头像</button>
+        <div class="div_photo">
+            <img id="show_img">
+        </div>
+    </div>
+    <div class="layui-upload  right">
+        <button type="button" class="layui-btn updatebtn" id="upload_btn">上传头像</button>
+        <button type="button" class="layui-btn updatebtn" onclick="sureuserphoto()">修改头像</button>
+        <div class="layui-upload-list div_photo">
+            <img class="layui-upload-img" id="upload_img">
+            <p id="p_photo"></p>
+        </div>
+    </div>
+    <div></div>
+</div>
+<!--引用顺序不要乱，不然可能无法正常使用-->
+<script type="text/javascript" src="/layuiadmin/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/core.js"></script>
+<script type="text/javascript" src="/js/updatephoto.js"></script>
+</body>
+</html>

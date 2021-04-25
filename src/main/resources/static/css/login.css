@@ -1,0 +1,77 @@
+#carousel{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+#lay_form{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 350px;
+    height: 300px;
+    margin-left: -175px;
+    margin-top: -150px;
+    background-color: rgba(0,0,0,0.5);
+    padding: 25px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+    border-radius: 12px;
+    z-index: 100;
+}
+.layui-form-label{
+    font-size: 25px;
+    margin-left: -60px;
+    margin-bottom: 10px;
+    color: white;
+    width: 300px;
+    font-family: 楷体;
+ }
+.username,.password{
+    width: 300px;
+    border-radius: 5px;
+}
+.checkcode{
+    width: 145px;
+}
+.code_div{
+    margin-left: 160px;
+    margin-top: -40px;
+    width: 140px;
+}
+.code{
+    width: 90px;
+    height: 40px;
+    background-color: #FBFBFB;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+    font-size: 22px;
+    color: #59B573;
+}
+.layui-icon-refresh{
+
+}
+.btn1{
+    width: 300px;
+    background-color: #40AFFE;
+    border-radius: 5px;
+}
+.btn2{
+    width: 140px;
+    background-color: #40AFFE;
+    border-radius: 5px;
+}
+/**
+输入验证码之后动态显示图片
+ */
+.layui-icon-refresh{
+    margin-left: 10px;
+    font-size: 30px;
+    font-weight: bolder;
+    color: #59B573;
+    vertical-align: top;
+}
+

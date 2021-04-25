@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" media="screen"/>
+    <link rel="stylesheet" href="/media/layuiadmin/layui/css/layui.css" media="all">
+
+    <style>
+        .layui-table td{
+            text-align: center;
+            color: black;
+        }
+        .layui-icon{
+            font-size: 20px;
+        }
+        tbody a:last-child{
+            margin-left: 10px;
+            color: red;
+        }
+        tbody .layui-icon-ok{
+            color: #0d957a;
+        }
+        tbody .layui-icon-close{
+            color: red;
+        }
+        tbody .layui-icon-edit{
+            color: black;
+        }
+        tbody td:nth-child(5),tbody td:nth-child(8){
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-container" style="width: 100%;">
+    <table class="layui-table" style="width: 1600px;margin:auto;margin-top: 30px;">
+        <thead>
+          <tr>
+              <td colspan="10" style="text-align: right;border: none;background-color: white;">
+                  <a href="javascript:;">
+                      <button class="layui-btn">
+                          <i class="layui-icon layui-icon-group" style="font-size: 20px;"><span style="font-size: 17px;margin-left: 5px;">新增用户</span></i>
+                      </button>
+                  </a>
+                  <a href="javascript:;">
+                      <button class="layui-btn" style="background-color: red;">
+                          <i class="layui-icon layui-icon-delete" style="font-size: 20px;"><span style="font-size: 17px;margin-left: 5px;">批量删除</span></i>
+                      </button>
+                  </a>
+              </td>
+          </tr>
+          <tr>
+              <td style="width: 4%">序号</td>
+              <td style="width: 3%"><input type="checkbox"></td>
+              <td style="width: 6%">账号</td>
+              <td style="width: 6%">姓名</td>
+              <td style="width: 15%">单位</td>
+              <td style="width: 10%">部门</td>
+              <td style="width: 6%">角色</td>
+              <td style="width: 36%">权限列表</td>
+              <td style="width: 6%">启用/禁用</td>
+              <td style="width: 8%">操作</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <td>1</td>
+              <td><input type="checkbox"></td>
+              <td>chengjw</td>
+              <td>程俊文</td>
+              <td>厦门市市场监督管理局</td>
+              <td>注册科</td>
+              <td>管理员</td>
+              <td>qwertyuiopasdfghjklzxcvbnmdfdfajcvjajwafwfnmnasfwkln</td>
+              <td>
+                  <i class="layui-icon layui-icon-ok"></i>
+              </td>
+              <td>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-edit"></i></a>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-close" ></i></a>
+              </td>
+          </tr>
+          <tr>
+              <td>2</td>
+              <td><input type="checkbox"></td>
+              <td>chengjw</td>
+              <td>程俊文</td>
+              <td>厦门市市场监督管理局</td>
+              <td>注册科</td>
+              <td>管理员</td>
+              <td>qwertyuiopasdfghjklzxcvbnmdfdfajcvjajwafwfnmnasfwkln</td>
+              <td>
+                  <i class="layui-icon layui-icon-close"></i>
+              </td>
+              <td>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-edit"></i></a>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-close" ></i></a>
+              </td>
+          </tr>
+          <tr>
+              <td>3</td>
+              <td><input type="checkbox"></td>
+              <td>chengjw</td>
+              <td>程俊文</td>
+              <td>厦门市市场监督管理局</td>
+              <td>注册科</td>
+              <td>管理员</td>
+              <td>qwertyuiopasdfghjklzxcvbnmdfdfajcvjajwafwfnmnasfwkln</td>
+              <td>
+                  <i class="layui-icon layui-icon-close"></i>
+              </td>
+              <td>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-edit"></i></a>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-close" ></i></a>
+              </td>
+          </tr>
+          <tr>
+              <td>4</td>
+              <td><input type="checkbox"></td>
+              <td>chengjw</td>
+              <td>程俊文</td>
+              <td>厦门市思明区市场监督管理局</td>
+              <td>注册科</td>
+              <td>管理员</td>
+              <td>qwertyuiopasdfghjklzxcvbnmdfdfajcvjajwafwfnmnasfwkln</td>
+              <td>
+                  <i class="layui-icon layui-icon-ok"></i>
+              </td>
+              <td>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-edit"></i></a>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-close" ></i></a>
+              </td>
+          </tr>
+          <tr>
+              <td>5</td>
+              <td><input type="checkbox"></td>
+              <td>chengjw</td>
+              <td>程俊文</td>
+              <td>厦门市湖里区市场监督管理局</td>
+              <td>注册科</td>
+              <td>管理员</td>
+              <td>qwertyuiopasdfghjklzxcvbnmdfdfajcvjajwafwfnmnasfwkln</td>
+              <td>
+                  <i class="layui-icon layui-icon-close"></i>
+              </td>
+              <td>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-edit"></i></a>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-close" ></i></a>
+              </td>
+          </tr>
+          <tr>
+              <td>6</td>
+              <td><input type="checkbox"></td>
+              <td>chengjw</td>
+              <td>程俊文</td>
+              <td>厦门市翔安市场监督管理局</td>
+              <td>注册科</td>
+              <td>管理员</td>
+              <td>qwertyuiopasdfghjklzxcvbnmdfdfajcvjajwafwfnmnasfwkln</td>
+              <td>
+                  <i class="layui-icon layui-icon-close"></i>
+              </td>
+              <td>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-edit"></i></a>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-close" ></i></a>
+              </td>
+          </tr>
+          <tr>
+              <td>7</td>
+              <td><input type="checkbox"></td>
+              <td>chengjw</td>
+              <td>程俊文</td>
+              <td>厦门市市场监督管理局</td>
+              <td>注册科</td>
+              <td>管理员</td>
+              <td>qwertyuiopasdfghjklzxcvbnmdfdfajcvjajwafwfnmnasfwkln</td>
+              <td>
+                  <i class="layui-icon layui-icon-ok"></i>
+              </td>
+              <td>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-edit"></i></a>
+                  <a href="javascript:;"><i class="layui-icon layui-icon-close" ></i></a>
+              </td>
+          </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

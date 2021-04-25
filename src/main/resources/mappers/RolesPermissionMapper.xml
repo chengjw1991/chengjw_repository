@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.RolesPermissionMapper">
+    <insert id="InsertRolePerms">
+        insert into rolespermission values
+        <foreach collection="list" item="rp" separator="," index="index">
+            (#{rp.rid},#{rp.pid})
+        </foreach>
+    </insert>
+    <delete id="DeleteRolePerms">
+        delete from rolesPermission where rid = #{rid}
+    </delete>
+    <select id="SelectPermList" resultType="java.lang.Integer">
+        select pid from rolespermission where rid = #{roleid}
+    </select>
+</mapper>

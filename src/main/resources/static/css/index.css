@@ -1,0 +1,14 @@
+.nav-icon{
+    font-size: 18px;
+}
+dd span{
+    margin-left: 30px;
+}
+.nav-span{
+    margin-left: 10px;
+    font-size: 18px;
+}
+.layui-tab-title .layui-this{
+    background-color: #4E5465;
+    color: white;
+}

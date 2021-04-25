@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.OperationLogMapper">
+    <insert id="InsertLog" parameterType="com.cheng.beans.Operationlog">
+        insert into operationlog values (#{username},#{realname},#{clientip},#{classname},#{fangfaname},#{operationdate},#{status},#{dwcode},#{params})
+    </insert>
+    <select id="SelectLog" resultType="com.cheng.beans.Operationlog">
+        select top ${pagecount} * from operationlog where <include refid="log_sql"></include>
+        and id >= ( select max(id)  from  (select top ((#{pageindex}-1)*#{pagecount}+1) id from operationlog  where
+        <include refid="log_sql"></include>   order by id asc ) d)  order by id asc
+    </select>
+    <select id="SelectCountLog" resultType="java.lang.Integer">
+        select count(*) num from operationlog where <include refid="log_sql"></include>
+    </select>
+    <sql id="log_sql">
+        dwcode like #{dwcode}  and username like #{username}  and  operationdate between #{startdate} and #{enddate}
+    </sql>
+</mapper>

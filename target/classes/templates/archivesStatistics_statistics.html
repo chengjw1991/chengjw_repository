@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro"
+      xmlns:shi="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>档案统计</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" media="screen"/>
+    <link rel="stylesheet" href="/layuiadmin/layui/css/layui.css" media="all">
+    <style>
+        .layui-table td{
+            text-align: center;
+        }
+        #tr_td{
+            color: black;
+            font-size: 20px;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<form class="layui-form" style="margin-top: 10px;">
+    <div class="layui-form-item" >
+        <!--行内元素-->
+        <div class="layui-inline">
+            <label class="layui-form-label" >单位</label>
+            <div class="layui-input-inline" style="width: 270px;">
+                <select name="dwmc" id="dwmc">
+                    <shiro:hasRole name="superAdministrator">
+                        <option value="">-------厦门全市-------</option>
+                    </shiro:hasRole>
+                </select>
+            </div>
+        </div>
+        <div class="layui-inline" style="margin-left: -30px;">
+            <label class="layui-form-label" style="width: 100px;" >起始受理日期</label>
+            <div class="layui-input-inline" style="width: 220px;">
+                <input class="layui-input layuidate" type="text" name="startdate" placeholder="请您选择起始受理日期">
+            </div>
+        </div>
+        <div class="layui-inline" style="margin-left: -30px;">
+            <label class="layui-form-label" style="width: 100px;">截止受理日期</label>
+            <div class="layui-input-inline" style="width: 220px;">
+                <input class="layui-input layuidate" type="text" name="enddate" placeholder="请您选择截止受理日期">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <div class="layui-input-inline" style="margin-left: 0px;width: 65px">
+                <input type="button" class=" layui-btn " value="搜索" onclick="selectCount()">
+            </div>
+            <div class="layui-input-inline" style="width: 110px;margin-left: 0px;width: 93px;">
+                <input class="layui-btn" type="button" name="" value="导出EXCEL">
+            </div>
+        </div>
+    </div>
+</form>
+<!--下方table数据-->
+<div style="width: 99.5%;height: 615px;overflow-y: auto;">
+    <table id="data" class="layui-table" lay-filter="data-table">
+        <thead>
+        <tr>
+            <td colspan="10" id="tr_td"></td>
+        </tr>
+        <tr>
+            <td>企业类型</td>
+            <td>已受理(卷)</td>
+            <td>已接收(卷)</td>
+            <td>正在数字化(卷)</td>
+            <td>数字化完成(卷)</td>
+            <td>出库(卷)</td>
+            <td>入库(卷)</td>
+<!--            <td>迁入(卷)</td>-->
+<!--            <td>迁出(卷)</td>-->
+            <td>总计(卷)</td>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<hr class="layui-bg-gray">
+<script type="text/javascript" src="/layuiadmin/layui/layui.all.js"></script>
+<script type="text/javascript" src="/js/core.js"></script>
+<script type="text/javascript" src="/js/statistics.js"></script>
+</body>
+</html>

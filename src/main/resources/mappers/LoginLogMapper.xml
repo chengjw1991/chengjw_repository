@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.LoginLogMapper">
+    <insert id="InsertLoginLog" parameterType="com.cheng.beans.Loginlog">
+        insert into loginlog values (#{username},#{dwname},#{bmname},#{clientip},#{userid},#{date},#{realname},#{dwcode})
+    </insert>
+    <select id="SelectLoginLog" resultType="com.cheng.beans.Loginlog">
+        select top ${pagecount} * from loginlog where <include refid="loginlog_sql"></include>
+        and id >= ( select max(id)  from  (select top ((#{pageindex}-1)*#{pagecount}+1) id from loginlog  where
+        <include refid="loginlog_sql"></include>   order by id asc ) d)  order by id asc
+    </select>
+    <select id="SelectLoginLogByCode" resultType="java.lang.Integer">
+        select count(*) num from loginlog where <include refid="loginlog_sql"></include>
+    </select>
+    <sql id="loginlog_sql">
+        dwcode like #{dwcode}  and username like #{username}  and date between #{startdate} and #{enddate}
+    </sql>
+</mapper>

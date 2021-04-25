@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cheng.mapper.QrqcMapper">
+   <insert id="InsertInfo" parameterType="java.util.List">
+       insert into qrqc values
+       <foreach collection="qrqc" item="q" separator=",">
+           (#{q.qymc},#{q.tyshxydm},#{q.zch},#{q.frxm},#{q.qrcode},#{q.qccode},#{q.qyrq},#{q.isqr})
+       </foreach>
+   </insert>
+    <select id="SelectInfoByConditon" resultType="com.cheng.beans.Qrqc">
+        select distinct qymc,tyshxydm,zch,frxm,qrcode,qccode,qyrq,isqr from qrqc where ${condition} like #{content} and qrcode like #{code} and isqr = 0
+    </select>
+    <select id="SelectInfoByTyshxydm" resultType="com.cheng.beans.Qrqc">
+        select top 1 * from qrqc where tyshxydm = #{tyshxydm} and isqr = 0 order by qyrq desc;
+    </select>
+    <update id="UpdateInfoByTyshxydm">
+        update qrqc set isqr = 1 where tyshxydm in
+        <foreach collection="tyshxydm" item="tyshxydm" open="(" close=")" separator=",">
+            #{tyshxydm}
+        </foreach>
+    </update>
+</mapper>
